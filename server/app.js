@@ -32,20 +32,37 @@ server.get('/', function(req, res) {
   res.json("Hotel's server");
 });
 
-server.get('/locations', function(req, res) {
-  db.manyOrNone('SELECT * FROM location')
+server.get('/hotels', function(req, res) {
+  db.manyOrNone('SELECT * FROM hotel')
   .then(data => {res.json(data)})
   .catch(error => {console.log(error)});
 });
 
-server.get('/location/:id', function(req, res) {
+server.get('/hotel/:id', function(req, res) {
   const id = parseInt(req.params.id);
   if (id > 0 && id < 6) {
-  db.one(`SELECT * FROM location WHERE id = ${id}`)
+  db.one(`SELECT * FROM hotel WHERE id = ${id}`)
   .then(data => {res.json(data)})
   .catch(error => {console.log(error)});
   } else {
-    console.error('Location not found');
+    console.error('Hotel not found');
+  }
+});
+
+server.get('/events', function(req, res) {
+  db.manyOrNone('SELECT * FROM event')
+  .then(data => {res.json(data)})
+  .catch(error => {console.log(error)});
+});
+
+server.get('/event/:location', function(req, res) {
+  const location = req.params.location;
+  if (location) {
+  db.manyOrNone('SELECT * FROM event WHERE location = $1', [location])
+  .then(data => {res.json(data)})
+  .catch(error => {console.log(error)});
+  } else {
+    console.error('Event not found');
   }
 });
 

@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default function Hero(location: any) {
-    
-    console.log(location);
 
     return ( 
         <div id="Hero">
@@ -11,7 +9,15 @@ export default function Hero(location: any) {
             </div>
         <style>
             {`
-                #Hero {}
+                #Hero {
+                    display: flex;
+                    position: relative;
+                    width: 100vw;
+                    height: 100vh;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
                 #HeroContainer {}
                 p {
                     color: red;

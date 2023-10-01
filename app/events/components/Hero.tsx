@@ -1,13 +1,15 @@
 import React from 'react';
 
-export default function Hero(locations: any) {
+export default function Hero(events: any) {
+    
+    console.log(events);
 
     return ( 
         <div id="Hero">
             <div id="HeroContainer">
-                {locations.locations.map((loc: any) => (
-                    <div id='' key={loc.id}>
-                        <p>{loc.title}</p>
+                {events.events.map((event: any) => (
+                    <div id='' key={event.id}>
+                        <p>{event.title}</p>
                     </div>
                 ))}
             </div>
@@ -22,15 +24,7 @@ export default function Hero(locations: any) {
                     align-items: center;
                     justify-content: center;
                 }
-                #HeroContainer {
-                    display: flex;
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                }
+                #HeroContainer {}
                 p {
                     color: red;
                 }
