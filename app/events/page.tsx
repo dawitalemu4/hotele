@@ -1,5 +1,6 @@
 import React from 'react';
 import getAllEvents from '@/services/getAllEvents';
+import Header from '../global/Header';
 import Hero from './components/Hero';
 
 export default async function Events() {
@@ -9,6 +10,7 @@ export default async function Events() {
   return (
     <html>
       <body>
+        <Header />
         <Hero events={events} />
       </body>
     </html>

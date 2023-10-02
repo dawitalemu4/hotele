@@ -70,7 +70,7 @@ INSERT INTO "event" (
     'Tokyo Disneyland - Christmas 2023', 
     'Tokyo', 
     'Tokyo Disney Resort, 1-1 Maihama, Urayasu, Chiba 279-0031, Japan',
-    'https://media.timeout.com/images/105658644/image.jpg'
+    'https://tdrexplorer.com/wp-content/uploads/2023/09/atf_mv.jpg'
 ), (
     'Shibuya Grand Line Store - One Piece Live-Action Pop-Up Event', 
     'Tokyo', 
@@ -112,3 +112,11 @@ INSERT INTO "event" (
     '1 Chome-1 Shinko, Naka Ward, Yokohama, Kanagawa, Japan',
     'https://media.timeout.com/images/106031499/image.jpg'
 );
+
+
+
+SELECT * FROM "hotel";
+
+
+
+SELECT * FROM "event";
