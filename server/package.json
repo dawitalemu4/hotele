@@ -2,7 +2,8 @@
     "name": "server",
     "type": "commonjs",
     "scripts": {
-      "start": "node app.js"
+      "start": "node app.js",
+      "vercel-build": "echo Succesfully Deployed"
     },
     "dependencies": {
       "cors": "^2.8.5",

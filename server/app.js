@@ -17,7 +17,7 @@ const db = pgp(connection);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowedOrigins = 'http://localhost:3000';
+    const allowedOrigins = 'https://hotel-template-da.vercel.app';
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -66,6 +66,14 @@ server.get('/event/:location', function(req, res) {
   }
 });
 
-server.listen(port, function() {
-  console.log(`Server listening on port ${port}`);
-});
+module.exports = server;
+
+const startServer = () => {
+  server.listen(port, function () {
+    console.log(`Server listening on port ${port}`);
+  });
+};
+
+if (require.main === module) {
+  startServer();
+}
