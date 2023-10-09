@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import getEventByLocation from '../../../services/getEventByLocation';
+import getEventByLocation from '../../../services/GET/getEventByLocation';
 import Header from '../../global/Header';
 import Hero from './components/ByLocation';
 

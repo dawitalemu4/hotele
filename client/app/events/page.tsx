@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import getAllEvents from '../../services/getAllEvents';
+import getAllEvents from '../../services/GET/getAllEvents';
 import Header from '../global/Header';
 import Hero from './components/AllEvents';
 
