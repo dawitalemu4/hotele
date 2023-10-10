@@ -2,9 +2,11 @@
 import '../globals.css'
 import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
+import Modal from '../global/Modal';
 
 export default function Hero(hotels: any) {
     const [currentHotel, setCurrentHotel] = useState(0);
+    const width = hotels.hotels.length * 100;
 
     const left = () => {
         if (currentHotel > 0) {
@@ -13,7 +15,7 @@ export default function Hero(hotels: any) {
     };
 
     const right = () => {
-        if (currentHotel < 3) {
+        if (currentHotel < (width / 100)) {
             setCurrentHotel(currentHotel + 1);
         }
     };
@@ -40,7 +42,7 @@ export default function Hero(hotels: any) {
                 RightArrow.style.display = 'flex';
             }
         }
-        else if (currentHotel == 3) {
+        else if (currentHotel == ((width / 100) - 1)) {
             if (LeftArrow) {
                 LeftArrow.style.display = 'flex';
             }
@@ -79,6 +81,9 @@ export default function Hero(hotels: any) {
                                 </div>
                                 <div id="HotelDescription">
                                     <p id="Description">{hotel.description}</p>
+                                </div>
+                                <div id="HotelPrice">
+                                    <Modal hotel={hotel} />                                 
                                 </div>
                             </div>
                         </div>
@@ -170,7 +175,7 @@ export default function Hero(hotels: any) {
                     position: relative;
                     width: 99%;
                     height: 45%;
-                    margin-top: 2%;
+                    margin-top: 3%;
                     padding-right: 1%;
                     flex-direction: column;
                     overflow-y: scroll;
@@ -180,7 +185,8 @@ export default function Hero(hotels: any) {
                     background: transparent;
                 }
                 #HotelInfo::-webkit-scrollbar-thumb {
-                    background: grey;                
+                    background: grey;  
+                    border-radius: 10px;              
                 }
                 #HotelName {
                     

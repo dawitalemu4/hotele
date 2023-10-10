@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 
 export default function Hero(events: any) {
-    const [currentEvent, setCurrentEvent] = useState(0);
+    const [currentEvent, setCurrentEvent] = useState(0);    
+    const width = events.events.length * 100;
 
     const left = () => {
         if (currentEvent > 0) {
@@ -13,7 +14,7 @@ export default function Hero(events: any) {
     };
 
     const right = () => {
-        if (currentEvent < 9) {
+        if (currentEvent < (width / 100)) {
             setCurrentEvent(currentEvent + 1);
         }
     };
@@ -40,7 +41,7 @@ export default function Hero(events: any) {
                 RightArrow.style.display = 'flex';
             }
         }
-        else if (currentEvent == 9) {
+        else if (currentEvent == ((width / 100) - 1)) {
             if (LeftArrow) {
                 LeftArrow.style.display = 'flex';
             }

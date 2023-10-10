@@ -1,5 +1,7 @@
+'use client'
 import '../../globals.css'
 import React from 'react';
+import Modal from '../../global/Modal';
 
 export default function Hero(hotel: any) {
 
@@ -19,6 +21,9 @@ export default function Hero(hotel: any) {
                         </div>
                         <div id="HotelDescription">
                             <p id="Description">{hotel.hotel.description}</p>
+                        </div>
+                        <div id="HotelPrice">
+                            <Modal hotel={hotel} />
                         </div>
                     </div>
                 </div>
@@ -73,7 +78,7 @@ export default function Hero(hotel: any) {
                     position: relative;
                     width: 99%;
                     height: 45%;
-                    margin-top: 2%;
+                    margin-top: 3%;
                     padding-right: 1%;
                     flex-direction: column;
                     overflow-y: scroll;
@@ -108,6 +113,7 @@ export default function Hero(hotel: any) {
                 }
                 #LocationLink {
                     color: white;
+                }border-bottom: 1px solid white;
                 }
             `}
         </style>
