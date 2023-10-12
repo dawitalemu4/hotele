@@ -17,3 +17,9 @@ export interface Event {
     img: string;
     date: string;
 }
+
+export interface Admin {
+    id: number;
+    username: string;
+    password: string;
+}

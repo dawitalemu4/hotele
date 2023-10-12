@@ -1,4 +1,4 @@
-CREATE TABLE "hotel" (
+CREATE TABLE hotel (
     id SERIAL PRIMARY KEY,
     title TEXT,
     description TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE "hotel" (
 
 
 
-INSERT INTO "hotel" (
+INSERT INTO hotel (
     title, description, location, address, rating, price, img
 ) VALUES (
     'Park Hyatt Tokyo', 
@@ -49,7 +49,7 @@ INSERT INTO "hotel" (
 
 
 
-CREATE TABLE "event" (
+CREATE TABLE event (
     id SERIAL PRIMARY KEY,
     title TEXT,
     location TEXT,
@@ -59,7 +59,7 @@ CREATE TABLE "event" (
 
 
 
-INSERT INTO "event" (
+INSERT INTO event (
     title, location, address, img
 ) VALUES (
     'Tokyo Disneyland - Halloween 2023', 
@@ -115,8 +115,8 @@ INSERT INTO "event" (
 
 
 
-SELECT * FROM "hotel";
+SELECT * FROM hotel;
 
 
 
-SELECT * FROM "event";
+SELECT * FROM event;

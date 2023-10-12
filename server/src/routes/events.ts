@@ -1,13 +1,15 @@
 export class EventRoutes {
+
     static readonly getAllEvents = '/events'
 
-    static readonly getEventByID = '/events/:id'
+    static readonly getEventByID = '/event/:id'
 
-    static readonly getEventByLocation = '/events/:location'
+    static readonly getEventsByLocation = '/events/location/:location'
 
-    static readonly createEvent = '/events/create'
+    static readonly createEvent = '/events/create/:newEvent'
 
-    static readonly updateEvent = '/events/update/:id'
+    static readonly updateEvent = '/event/update/:data'
 
-    static readonly deleteEvent = '/events/delete/:id'
+    static readonly deleteEvent = '/event/delete/:id'
+    
 }

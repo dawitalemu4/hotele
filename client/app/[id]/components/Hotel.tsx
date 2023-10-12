@@ -1,7 +1,7 @@
 'use client'
 import '../../globals.css'
 import React from 'react';
-import Modal from '../../global/Modal';
+import Modal from '../../global/CartModalComponents/Modal';
 
 export default function Hero(hotel: any) {
 
@@ -23,7 +23,7 @@ export default function Hero(hotel: any) {
                             <p id="Description">{hotel.hotel.description}</p>
                         </div>
                         <div id="HotelPrice">
-                            <Modal hotel={hotel} />
+                            <Modal hotel={hotel.hotel} />
                         </div>
                     </div>
                 </div>
@@ -81,6 +81,7 @@ export default function Hero(hotel: any) {
                     margin-top: 3%;
                     padding-right: 1%;
                     flex-direction: column;
+                    color: white;
                     overflow-y: scroll;
                 }
                 #HotelInfo::-webkit-scrollbar {
@@ -90,30 +91,16 @@ export default function Hero(hotel: any) {
                 #HotelInfo::-webkit-scrollbar-thumb {
                     background: grey;                
                 }
-                #HotelName {
-                    
-                }
                 #Name {
-                    color: white;
                     font-size: 30px;
                     font-family: InterBold;
                 }
-                #HotelAddress {
-
-                }
                 #Address {
-                    color: white;
                     font-size: 12px;
-                }
-                #HotelDescription {
-                    
                 }
                 #Description {
                     color: white;
-                }
-                #LocationLink {
-                    color: white;
-                }border-bottom: 1px solid white;
+                    font-family: Inter;
                 }
             `}
         </style>

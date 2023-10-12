@@ -1,4 +1,11 @@
+import axios from 'axios';
+
 export default async function getLocationByID(id: string) {
-    const location = await fetch(`https://hotel-template-backend.vercel.app/hotel/${id}`).then((res) => res.json())
-    return location;
-} 
+    try {
+        const location = await axios.get(`https://hotel-template-backend.vercel.app/hotel/${id}`)
+        return location.data;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}

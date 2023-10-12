@@ -1,4 +1,11 @@
+import axios from 'axios';
+
 export default async function getAllLocations() {
-    const allLocations = await fetch('https://hotel-template-backend.vercel.app/hotels').then((res) => res.json())
-    return allLocations;
+    try {
+        const allLocations = await axios.get('https://hotel-template-backend.vercel.app/hotels');
+        return allLocations.data;
+    }
+    catch (error) {
+        console.log(error);
+    }
 }

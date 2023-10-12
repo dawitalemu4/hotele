@@ -27,7 +27,7 @@ export class HotelQueries {
 
   async getHotelByID(req: Request, res: Response, id: string) {
     try {
-      const hotel = await db.one(`SELECT * FROM hotel WHERE id = ${id}`);
+      const hotel = await db.one("SELECT * FROM hotel WHERE id = $1", [id]);
       return res.json(hotel);
     } catch (error) {
       console.error(error);
@@ -35,11 +35,9 @@ export class HotelQueries {
     }
   }
 
-  async getHotelByLocation(req: Request, res: Response, location: string) {
+  async getHotelsByLocation(req: Request, res: Response, location: string) {
     try {
-      const hotelsByLocation = await db.manyOrNone(
-        `SELECT * FROM hotel WHERE location = ${location}`
-      );
+      const hotelsByLocation = await db.manyOrNone("SELECT * FROM hotel WHERE location = $1", [location]);
       return res.json(hotelsByLocation);
     } catch (error) {
       console.error(error);

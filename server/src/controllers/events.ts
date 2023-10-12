@@ -27,7 +27,7 @@ export class EventQueries {
 
   async getEventByID(req: Request, res: Response, id: string) {
     try {
-      const event = await db.one(`SELECT * FROM event WHERE id = ${id}`);
+      const event = await db.one("SELECT * FROM event WHERE id = $1", [id]);
       return res.json(event);
     } catch (error) {
       console.error(error);
@@ -35,11 +35,9 @@ export class EventQueries {
     }
   }
 
-  async getEventByLocation(req: Request, res: Response, location: string) {
+  async getEventsByLocation(req: Request, res: Response, location: string) {
     try {
-      const eventsByLocation = await db.manyOrNone(
-        `SELECT * FROM event WHERE location = ${location}`
-      );
+      const eventsByLocation = await db.manyOrNone("SELECT * FROM event WHERE location = $1", [location]);
       return res.json(eventsByLocation);
     } catch (error) {
       console.error(error);

@@ -2,7 +2,7 @@
 import '../globals.css'
 import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
-import Modal from '../global/Modal';
+import Modal from '../global/CartModalComponents/Modal';
 
 export default function Hero(hotels: any) {
     const [currentHotel, setCurrentHotel] = useState(0);

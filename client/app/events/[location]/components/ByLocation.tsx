@@ -85,7 +85,7 @@ export default function Hero(events: any) {
                             </div>
                         </div>
                     ))}
-                    <div id="RightArrowContainer"  onClick={right}>
+                    <div id="RightArrowContainer" onClick={right}>
                         <BsArrowRightShort id="RightArrow" />
                     </div>
                 </div>

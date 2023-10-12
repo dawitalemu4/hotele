@@ -2,9 +2,9 @@
     "name": "server",
     "type": "module",
     "scripts": {
-        "start:build": "tsc",
-        "start:js": "node build/server.js",
-        "start": "concurrently npm:start:*",
+        "build:build": "tsc",
+        "build:js": "node build/server.js",
+        "build": "concurrently npm:build:*",
         "vercel-build": "echo Successfully Deployed",
         "dev:build": "tsc -w",
         "dev:js": "nodemon build/server.js",
