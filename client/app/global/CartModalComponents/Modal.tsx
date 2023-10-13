@@ -10,6 +10,16 @@ export default function Modal( hotel: any ) {
     const [showCheckout, setShowCheckout] = useState(false);
     const [cartLength, setCartLength] = useState(0);
 
+    const handleCartModal = (cartLength: number) => {
+        if (cartLength > 0) {
+            setCartLength(cartLength);
+            setShowCart(true);
+        } else {
+            setCartLength(0)
+            setShowCart(false);
+        }
+    }
+
     const showCheckoutModal = () => {
         setShowCheckout(true);
     }
@@ -21,22 +31,26 @@ export default function Modal( hotel: any ) {
     useEffect(() => {
 
         const cart = localStorage.getItem('cart');
-        const cartArray = cart ? JSON.parse(cart) : [];
-        setCartLength(cartArray.length);
-
-        if (cartArray.length > 0) {
-            setShowCart(true);
+        if (cart) {
+            const cartArray = JSON.parse(cart);
+            setCartLength(cartArray.length);
+            console.log('in useEffect, set cart length to ', cartArray.length);
+            handleCartModal(cartArray.length);
         } else {
+            setCartLength(0);
+            console.log('in useEffect, set cart length to ', 0);
+            handleCartModal(0);
             setShowCart(false);
+            console.log('in useEffect, set showCart to ', false, 'cart state is: ', showCart, 'and cart length is ', cartLength);
         }
 
-    }, []);
+    }, [cartLength]);
 
     return (
         <div>
-            <AddToCart hotel={hotel} />
+            <AddToCart hotel={hotel} changeCartState={(cartLength) => handleCartModal(cartLength)} />
             {showCart && <Cart showCheckout={showCheckoutModal} cartLength={cartLength} />}
-            {showCheckout && <Checkout closeCheckout={closeCheckoutModal} />}
+            {showCheckout && <Checkout updateCart={(cartLength) => handleCartModal(cartLength)} closeCheckout={closeCheckoutModal} />}
         </div>
     )
 }

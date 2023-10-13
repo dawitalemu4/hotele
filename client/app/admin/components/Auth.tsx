@@ -10,7 +10,7 @@ export default function Auth() {
 
     // pushing my console logs so its easier to explain step by step in the future
 
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
     const [showUpdatePage, setShowUpdatePage] = useState(true);
 
 
