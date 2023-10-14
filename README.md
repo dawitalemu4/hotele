@@ -4,7 +4,7 @@ Submitted by: **Dawit Alemu**
 
 About this web app: **Hotel website that shows nearby events**
 
-Time spent: **10** hours
+Time spent: **15** hours
 
 ## Required Features
 
@@ -25,11 +25,11 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Selecting particular options prevents incompatible options from being selected even before form submission
+- [x] Selecting particular options prevents incompatible options from being selected even before form submission
 
 The following **optional** features are implemented:
 
-- [ ] An additional page shows all possible `Events` that the user can sort and filter by `Location`
+- [x] An additional page shows all possible `Events` that the user can sort and filter by `Location`
 - [ ] `Events` display a countdown showing the time remaining before that event and appears with different formatting when the event has passed
 
 The following **additional** features are implemented:
@@ -40,7 +40,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-https://github.com/dawitalemu4/HotelTemplate/assets/106638403/d35d72fb-bcaa-4c95-9b41-ac0a65c09a0d
+https://github.com/dawitalemu4/HotelTemplate/assets/106638403/8fff543d-be4b-400c-acc0-bf9720b967b1
 
 
 GIF created with Microsoft Window Snipping Tool
