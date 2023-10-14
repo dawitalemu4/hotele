@@ -23,7 +23,6 @@ const AddToCart: React.FC<AddToCartProps> = ({ hotel, changeCartState }) => {
         }
         cartArray.push(hotel);
         localStorage.setItem('cart', JSON.stringify(cartArray));
-        console.log('in addToCart, cart length is ', cartArray.length);
         changeCartState(cartArray.length);
     }
 

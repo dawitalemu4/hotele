@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import getAllLocations from '../services/GET/getAllLocations';
+import getAllLocations from '../services/GET/getAllHotels';
 import Header from './global/Header';
 import Hero from './components/Home';
 

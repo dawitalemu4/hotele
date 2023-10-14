@@ -6,9 +6,9 @@ export class HotelRoutes {
 
     static readonly getHotelsByLocation = '/hotels/location/:location'
 
-    static readonly createHotel = '/hotels/create/:newHotel'
+    static readonly createHotel = '/hotels/create'
 
-    static readonly updateHotel = '/hotel/update/:data'
+    static readonly updateHotel = '/hotel/update/:id'
 
     static readonly deleteHotel = '/hotel/delete/:id'
     

@@ -1,5 +1,5 @@
 export interface Hotel {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     location: string;
@@ -10,7 +10,7 @@ export interface Hotel {
 }
 
 export interface Event {
-    id: number;
+    id?: number;
     title: string;
     location: string;
     address: string;
@@ -19,7 +19,7 @@ export interface Event {
 }
 
 export interface Admin {
-    id: number;
+    id?: number;
     username: string;
     password: string;
 }

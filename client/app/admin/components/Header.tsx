@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ showNewPage, showUpdatePage }) => {
                 {`
                     #AdminHeader {
                         display: flex;
-                        position: fixed;
+                        position: relative;
                         top: 0;
                         left: 0;
                         width: 99.5vw;
