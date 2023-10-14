@@ -19,7 +19,9 @@ export default function New() {
         if (validateHotelData(data)) {
             const newHotel: Hotel = data;
             createHotel(newHotel);
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
             setWarning(true);
             setTimeout(() => {

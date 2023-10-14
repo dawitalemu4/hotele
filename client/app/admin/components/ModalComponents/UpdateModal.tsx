@@ -39,7 +39,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ id, setCloseModal }) => {
         const data = {id: parseInt(id), title, description, location, address, rating, price, img};
         if (validateHotelData(data)) {
             updateHotel(data, id);
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
             setWarning(true);
             setTimeout(() => {
@@ -61,7 +63,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ id, setCloseModal }) => {
     const deleteHotelSubmit = (id: string) => {
         if (id !== '') {
             deleteHotel(id);
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
             setWarning(true);
             setTimeout(() => {
