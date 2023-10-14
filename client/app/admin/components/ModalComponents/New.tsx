@@ -18,7 +18,6 @@ export default function New() {
         const data = {title, description, location, address, rating, price, img};
         if (validateHotelData(data)) {
             const newHotel: Hotel = data;
-            console.log(newHotel);
             createHotel(newHotel);
             window.location.reload();
         } else {

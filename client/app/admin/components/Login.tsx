@@ -18,7 +18,6 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
             const confirmedPassword = res.password;
             updateLoginState(confirmedUsername, confirmedPassword);
         } else {
-            const error = document.getElementById('LoginError');
             setShowWarning(true);
             setTimeout(() => {
                 setShowWarning(false);
