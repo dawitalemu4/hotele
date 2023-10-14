@@ -3,7 +3,7 @@ import { Hotel } from '../types';
 
 export default async function createHotel(newHotel: Hotel) {
     try {
-        await axios.post(`http://localhost:5432/hotels/create`, newHotel);
+        await axios.post(`https://hotel-template-backend.vercel.app/hotels/create`, newHotel);
     }
     catch (error) {
         console.log(error);

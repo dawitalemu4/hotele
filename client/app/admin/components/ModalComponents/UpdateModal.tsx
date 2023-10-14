@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import getHotelByID from '../../../../services/GET/getHotelByID';
 import updateHotel from '../../../../services/PATCH/updateHotel';
 import deleteHotel from '../../../../services/DELETE/deleteHotel';
@@ -14,25 +14,19 @@ interface UpdateModalProps {
 const UpdateModal: React.FC<UpdateModalProps> = ({ id, setCloseModal }) => {
 
     const [warning, setWarning] = useState(false);
-    const [updatedHotel, setUpdatedHotel] = useState<Hotel>({title: '', description: '', location: '', address: '', rating: 0, price: 0, img: ''});
+    const [updatedHotel, setUpdatedHotel] = useState<Hotel>({id: undefined, title: '', description: '', location: '', address: '', rating: undefined, price: undefined, img: ''});
+    
+    const fetchData = async () => {
+        const data = await getHotelByID(id);
+        setUpdatedHotel(data);
+        updateFormData(data);
+    };
+
+    if (updatedHotel.id === undefined) {
+        fetchData();
+    }
+    
     const [title, setTitle] = useState(updatedHotel.title);
-
-    useEffect(() => {
-        const fetchHotelData = async () => {
-            try {
-                const res = await getHotelByID(id);
-                setUpdatedHotel(res);
-                console.log(res);
-            } catch (error) {
-                console.error('Error fetching hotel data', error);
-            }
-        };
-
-        if (title === '') {
-            fetchHotelData();
-        }
-    }, [title]);
-
     const [description, setDescription] = useState(updatedHotel.description);
     const [location, setLocation] = useState(updatedHotel.location);
     const [address, setAddress] = useState(updatedHotel.address);
@@ -45,13 +39,23 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ id, setCloseModal }) => {
         const data = {id: parseInt(id), title, description, location, address, rating, price, img};
         if (validateHotelData(data)) {
             updateHotel(data, id);
-            // window.location.reload();
+            window.location.reload();
         } else {
             setWarning(true);
             setTimeout(() => {
                 setWarning(false);
             }, 3000);
         }
+    }
+
+    const updateFormData = (data: any) => {
+        setTitle(data.title);
+        setDescription(data.description);
+        setLocation(data.location);
+        setAddress(data.address);
+        setRating(data.rating);
+        setPrice(data.price);
+        setImg(data.img);
     }
 
     const deleteHotelSubmit = (id: string) => {
@@ -102,25 +106,25 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ id, setCloseModal }) => {
             <div id="UpdateModalContainer">
                 <div id="UpdateModalForm">
                     <div id="UpdatedTitleContainer">
-                        <input id="UpdatedTitle" onChange={updatedTitle} placeholder="Title"></input>
+                        <input id="UpdatedTitle" onChange={updatedTitle} value={title} />
                     </div>
                     <div id="UpdatedDescriptionContainer">
-                        <input id="UpdatedDescription" onChange={updatedDescription} placeholder="Description"></input>
+                        <input id="UpdatedDescription" onChange={updatedDescription} value={description} />
                     </div>
                     <div id="UpdatedLocationContainer">
-                        <input id="UpdatedLocation" onChange={updatedLocation} placeholder="Location"></input>
+                        <input id="UpdatedLocation" onChange={updatedLocation} value={location} />
                     </div>
                     <div id="UpdatedAddressContainer">
-                        <input id="UpdatedAddress" onChange={updatedAddress} placeholder="Address"></input>
+                        <input id="UpdatedAddress" onChange={updatedAddress} value={address} />
                     </div>
                     <div id="UpdatedRatingContainer">
-                        <input id="UpdatedRating" onChange={updatedRating} placeholder="Rating"></input>
+                        <input id="UpdatedRating" onChange={updatedRating} value={rating} />
                     </div>
                     <div id="UpdatedPriceContainer">
-                        <input id="UpdatedPrice" onChange={updatedPrice} placeholder="Price"></input>
+                        <input id="UpdatedPrice" onChange={updatedPrice} value={price} />
                     </div>
                     <div id="UpdatedImgContainer">
-                        <input id="UpdatedImg" onChange={updatedImg} placeholder="Img"></input>
+                        <input id="UpdatedImg" onChange={updatedImg} value={img} />
                     </div>
                 </div>
                 <div id='UpdatedHotelSubmitContainer'>

@@ -91,6 +91,9 @@ export default function Hero(events: any) {
             </div>
         <style>
             {`
+            
+                :root { --width: ${width}vw; }
+
                 #Hero {
                     display: flex;
                     position: relative;

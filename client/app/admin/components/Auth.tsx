@@ -8,7 +8,7 @@ import Update from './ModalComponents/Update';
 
 export default function Auth() {
 
-    const [loggedIn, setLoggedIn] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
     const [showUpdatePage, setShowUpdatePage] = useState(true);
 
 
@@ -73,7 +73,7 @@ export default function Auth() {
     return (
       <div>
           {loggedIn ? <Header showNewPage={handleShowNewPage} showUpdatePage={handleShowUpdatePage} /> : <Login updateLoginState={(username, password) => checkValidity(username, password)} /> }
-          {loggedIn && showUpdatePage ? <Update /> : <New />}
+          {loggedIn ? ( showUpdatePage ? <Update /> : <New /> ) : null}
       </div>
     )
 }

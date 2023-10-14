@@ -3,7 +3,7 @@ import { Event } from '../types';
 
 export default async function updateEvent(updatedEvent: Event, id: string) {
     try {
-        await axios.patch(`https://hotel-template-backend.vercel.app/event/update/${id}`, updatedEvent)
+        await axios.put(`https://hotel-template-backend.vercel.app/event/update/${id}`, updatedEvent)
     }
     catch (error) {
         console.log(error);

@@ -9,6 +9,7 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showWarning, setShowWarning] = useState(false);
 
     const handleFormSubmit = async () => {
         const res = await checkCredentials(username, password);
@@ -17,10 +18,10 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
             const confirmedPassword = res.password;
             updateLoginState(confirmedUsername, confirmedPassword);
         } else {
-            const error = document.getElementById('LoginErrorContainer');
-            error.style.display = 'flex';
+            const error = document.getElementById('LoginError');
+            setShowWarning(true);
             setTimeout(() => {
-                error.style.display = 'none';
+                setShowWarning(false);
             }, 3000);
         }
     }
@@ -47,15 +48,89 @@ const Login: React.FC<LoginProps> = ({ updateLoginState }) => {
                     <button id="LoginButton" onClick={handleFormSubmit}>Login</button>
                 </div>
                 <div id="LoginErrorContainer">
-                    <p id="LoginError">Incorrect Credentials</p>
+                    {showWarning && <p id="LoginError">Incorrect Credentials</p>}
                 </div>
             </div>
             <style>
                 {`
-                    #Login {}
-                    #LoginErrorContainer {
-                        display: none;
+                    #Login {
+                        display: flex;
                         position: relative;
+                        width: 99.5vw;
+                        height: 100vh;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    #LoginContainer {
+                        display: flex;
+                        position: relative;
+                        width: 70%;
+                        height: 70%;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;                    
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-radius: 25px;
+                    }
+                    #LoginHeaderContainer {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 20%;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        font-family: InterBold;
+                        font-size: 30px;
+                    }
+                    #LoginInputContainer {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 40%;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    #LoginInput {
+                        display: flex;
+                        position: relative;
+                        width: 80%;
+                        height: 20%;
+                        border: none;
+                        outline: none;
+                        margin: 5px;
+                        padding: 5px;
+                    }
+                    #LoginButtonContainer {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 20%;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    #LoginButton {
+                        display: flex;
+                        position: relative;
+                        width: 50%;
+                        height: 50%;
+                        justify-content: center;
+                        align-items: center;
+                        outline: none;
+                        border-radius: 5px;
+                        font-family: InterBold;
+                        font-size: 20px;
+                        cursor: pointer;
+                    }
+                    #LoginErrorContainer {
+                        display: flex;
+                        position: relative;
+                        width: 100%;
+                        height: 20%;
+                        justify-content: center;
+                        align-items: center;
                         color: red;
                     }
                 `}

@@ -95,10 +95,13 @@ export default function Hero(hotels: any) {
             </div>
         <style>
             {`
+
+                :root { --width: ${width}vw; }
+
                 #Hero {
                     display: flex;
                     position: relative;
-                    width: 400vw;
+                    width: var(--width);
                     height: 80vh;
                     margin-top: 15vh;
                     flex-direction: column;

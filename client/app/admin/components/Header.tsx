@@ -50,21 +50,21 @@ const Header: React.FC<HeaderProps> = ({ showNewPage, showUpdatePage }) => {
                     }
                     #LeftContainer {
                         display: flex;
-                        width: 20%;
+                        width: 45%;
                         height: 100%;
-                        justify-content: center;
+                        justify-content: flex-start;
                         align-items: center;
                     }
                     #RightContainer {
                         display: flex;
-                        width: 80%;
+                        width: 45%;
                         height: 100%;
                         justify-content: flex-end;
                         align-items: center;
                     }
                     #AdminHeaderButtons {
                         display: flex;
-                        width: 40%;
+                        width: 100%;
                         height: 100%;
                         justify-content: space-evenly;
                         align-items: center;
