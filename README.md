@@ -1,4 +1,4 @@
-# WEB103 Project 3 - *Hotel Event Finder*
+# WEB103 Project 4 - *Hotel Event Finder*
 
 Submitted by: **Dawit Alemu**
 
