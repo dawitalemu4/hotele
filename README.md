@@ -42,6 +42,8 @@ Here's a walkthrough of implemented required features:
 
 https://github.com/dawitalemu4/HotelTemplate/assets/106638403/8fff543d-be4b-400c-acc0-bf9720b967b1
 
+![Screenshot 2023-10-17 105645](https://github.com/dawitalemu4/HotelTemplate/assets/106638403/3cfbac64-3520-454a-bae0-d20c1e031d7c)
+
 
 GIF created with Microsoft Window Snipping Tool
 
