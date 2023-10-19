@@ -120,3 +120,39 @@ SELECT * FROM hotel;
 
 
 SELECT * FROM event;
+
+
+
+CREATE TABLE hotel_event (
+    id SERIAL PRIMARY KEY,
+    location TEXT,
+    description TEXT,
+    hotel_id INT REFERENCES hotel(id),
+    event_id INT REFERENCES event(id)
+); 
+
+
+
+INSERT INTO hotel_event (
+    location, description, hotel_id, event_id
+) VALUES (
+    'Tokyo', 
+    'Free Shuttle Rides From Hotel between 10AM to 5PM', 
+    1,
+    1
+), (
+    'Tokyo', 
+    'Free Shuttle Rides From Hotel between 10AM to 5PM', 
+    1,
+    2
+), (
+    'Osaka', 
+    'Mascot at Lobby and Free Bus Rides From Hotel between 10AM to 5PM', 
+    3,
+    6
+), (
+    'Fukuoka', 
+    'Free Naruto Themed Ramen at Dinner', 
+    2,
+    9
+);

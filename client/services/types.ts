@@ -23,3 +23,10 @@ export interface Admin {
     username: string;
     password: string;
 }
+
+export interface HotelEvent {
+    location: string;
+    description: string;
+    hotel_id: number;
+    event_id: number;
+}
