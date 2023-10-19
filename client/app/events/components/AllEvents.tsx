@@ -1,11 +1,24 @@
 'use client'
 import '../../globals.css'
 import React, { useState, useEffect } from 'react';
-import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
+import getAllHotelEvents from '../../../services/GET/getAllHotelEvents';
+import { BsArrowLeftShort, BsArrowRightShort, BsFilter } from 'react-icons/bs';
 
 export default function Hero(events: any) {
-    const [currentEvent, setCurrentEvent] = useState(0);    
-    const width = events.events.length * 100;
+    const [currentEvent, setCurrentEvent] = useState(0);   
+    const [allEvents, setAllEvents] = useState(true);
+    const [hotelEvents, setHotelEvents] = useState([]); 
+    const [width, setWidth] = useState(events.events.length * 100);
+    const [showFilter, setShowFilter] = useState(false);
+
+    const fetchHotelEvents = async () => {
+        const response = await getAllHotelEvents();
+        setHotelEvents(response);
+    }
+
+    if (hotelEvents && hotelEvents.length === 0) {
+        fetchHotelEvents();
+    }
 
     const left = () => {
         if (currentEvent > 0) {
@@ -18,6 +31,26 @@ export default function Hero(events: any) {
             setCurrentEvent(currentEvent + 1);
         }
     };
+
+    const switchHotelEvents = () => {
+        setAllEvents(false);
+        setWidth(hotelEvents.length * 100);
+        setCurrentEvent(0);
+    };
+
+    const switchAllEvents = () => {
+        setAllEvents(true);
+        setWidth(events.events.length * 100);
+        setCurrentEvent(0);
+    }
+
+    const showFilterDropDown = () => {
+        setShowFilter(true);
+    }
+
+    const hideFilterDropDown = () => {
+        setShowFilter(false);
+    }
 
     useEffect(() => {
         const container = document.getElementById('Hero');
@@ -62,31 +95,68 @@ export default function Hero(events: any) {
     return ( 
         <div id="Hero">
             <div id="HeroContainer">
-                <div id="EventListContainer">
-                    <div id="LeftArrowContainer" onClick={left}>
-                        <BsArrowLeftShort id="LeftArrow" />
-                    </div>
-                    {events.events.map((event: any) => (
-                        <div id='Event' key={event.id}>
-                            <div id="ImageContainer">
-                                <img id='Image' src={event.img} />
-                            </div>
-                            <div id="EventInfo">
-                                <div id="EventName">
-                                    <p id="Name">{event.title}</p>
-                                </div>
-                                <div id="EventAddress">
-                                    <p id="Address">{event.address}</p>
-                                </div>
-                                <div id="EventLocation">
-                                    <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
-                                </div>
-                            </div>
+                <div id="FilterButtonContainer">
+                    {allEvents ? (
+                        <div id="FilterButton" onClick={switchHotelEvents} onMouseOver={showFilterDropDown} onMouseLeave={hideFilterDropDown}>
+                            <BsFilter id='FilterIcon' />
+                            {showFilter ? <p id="FilterText">All Events</p> : null }
                         </div>
-                    ))}
-                    <div id="RightArrowContainer"  onClick={right}>
-                        <BsArrowRightShort id="RightArrow" />
+                    ) : (
+                        <div id="FilterButton" onClick={switchAllEvents} onMouseOver={showFilterDropDown} onMouseLeave={hideFilterDropDown}>
+                            <BsFilter id='FilterIcon' />
+                            {showFilter ? <p id="FilterText">Hotel Events</p> : null }
+                        </div>
+                        
+                    )}
+                </div>
+                <div id="LeftArrowContainer" onClick={left}>
+                    <BsArrowLeftShort id="LeftArrow" />
+                </div>
+                {allEvents ? (
+                    <div id="EventListContainer">
+                        {events.events.map((event: any) => (
+                            <div id='Event' key={event.id}>
+                                <div id="ImageContainer">
+                                    <img id='Image' src={event.img} />
+                                </div>
+                                <div id="EventInfo">
+                                    <div id="EventName">
+                                        <p id="Name">{event.title}</p>
+                                    </div>
+                                    <div id="EventAddress">
+                                        <p id="Address">{event.address}</p>
+                                    </div>
+                                    <div id="EventLocation">
+                                        <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                ) : ( 
+                    <div id="EventListContainer">
+                        {hotelEvents.map((event: any) => (
+                            <div id='Event' key={event.id}>
+                                <div id="ImageContainer">
+                                    <img id='Image' src={event.img} />
+                                </div>
+                                <div id="EventInfo">
+                                    <div id="EventName">
+                                        <p id="Name">{event.title}</p>
+                                    </div>
+                                    <div id="EventAddress">
+                                        <p id="Address">{event.address}</p>
+                                    </div>
+                                    <div id="EventLocation">
+                                        <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <div id="RightArrowContainer"  onClick={right}>
+                    <BsArrowRightShort id="RightArrow" />
                 </div>
             </div>
         <style>
@@ -97,7 +167,7 @@ export default function Hero(events: any) {
                 #Hero {
                     display: flex;
                     position: relative;
-                    width: 1000vw;
+                    width: var(--width);
                     height: 80vh;
                     margin-top: 15vh;
                     flex-direction: column;
@@ -115,6 +185,38 @@ export default function Hero(events: any) {
                     justify-content: center;
                     align-items: center;
                 }
+                #FilterButtonContainer {
+                    display: flex;
+                    position: fixed;
+                    top: 9vh;
+                    right: 0;
+                    width: 200px;
+                    height: 50px;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: white;
+                    border-radius: 25px 0 0 25px;
+                }
+                #FilterButton {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 15px;
+                    color: black;
+                    font-size: 20px;
+                    font-family: InterBold;
+                    cursor: pointer;
+                }
+                #FilterIcon { font-size: 40px; margin-right: 10px; }
+                @keyframes slideIn {
+                    0% { transform: translateX(100%); }
+                    100% { transform: translateX(0); }
+                }
+                #FilterText { animation: slideIn 0.3s; }
                 #EventListContainer {
                     display: flex;
                     position: relative;
@@ -173,7 +275,9 @@ export default function Hero(events: any) {
                     display: flex;
                     position: relative;
                     width: 99%;
-                    height: 50%;
+                    height: 45%;
+                    margin-top: 3%;
+                    padding-right: 1%;
                     flex-direction: column;
                     overflow-y: scroll;
                 }

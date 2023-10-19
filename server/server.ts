@@ -15,7 +15,7 @@ const port = process.env.PORT;
 
 const corsOptions = {
   origin: (origin: any, callback: any) => {
-    const allowedOrigins = "https://hoteltemplate.vercel.app";
+    const allowedOrigins = ["https://hoteltemplate.vercel.app", "http://localhost:3000"];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
