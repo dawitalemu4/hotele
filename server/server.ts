@@ -3,9 +3,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { HotelQueries } from "./src/controllers/hotels.js";
 import { EventQueries } from "./src/controllers/events.js";
+import { HotelEventQueries } from "./src/controllers/hotel_events.js";
 import { AdminQueries } from "./src/controllers/admin.js";
 import { HotelRoutes } from "./src/routes/hotels.js";
 import { EventRoutes } from "./src/routes/events.js";
+import { HotelEventRoutes } from "./src/routes/hotel_events.js";
 import { AdminRoutes } from "./src/routes/admin.js";
 
 dotenv.config();
@@ -28,6 +30,7 @@ server.use(cors(corsOptions));
 
 const HotelControllers = new HotelQueries();
 const EventControllers = new EventQueries();
+const HotelEventControllers = new HotelEventQueries();
 const AdminControllers = new AdminQueries();
 
 server.get("/", (req, res) => {
@@ -101,6 +104,40 @@ server.put(EventRoutes.updateEvent, (req, res) => {
 server.delete(EventRoutes.deleteEvent, (req, res) => {
     const id = String(req.params.id);
     EventControllers.deleteEvent(req, res, id)
+});
+
+
+
+// Hotel Event Requests
+
+server.get(HotelEventRoutes.getAllHotelEvents, (req, res) => {
+    HotelEventControllers.getAllHotelEvents(req, res)
+});
+
+server.get(HotelEventRoutes.getHotelEventByID, (req, res) => {
+    const id = String(req.params.id);
+    HotelEventControllers.getHotelEventByID(req, res, id)
+});
+
+server.get(HotelEventRoutes.getHotelEventsByLocation, (req, res) => {
+    const location = String(req.params.location);
+    HotelEventControllers.getHotelEventsByLocation(req, res, location)
+});
+
+server.post(HotelEventRoutes.createHotelEvent, (req, res) => {
+    const data = req.body;
+    HotelEventControllers.createHotelEvent(req, res, data)
+});
+
+server.put(HotelEventRoutes.updateHotelEvent, (req, res) => {
+    const data = req.body;
+    const id = String(req.params.id);
+    HotelEventControllers.updateHotelEvent(req, res, data, id)
+});
+
+server.delete(HotelEventRoutes.deleteHotelEvent, (req, res) => {
+    const id = String(req.params.id);
+    HotelEventControllers.deleteHotelEvent(req, res, id)
 });
 
 
