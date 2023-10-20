@@ -2,22 +2,44 @@
 import '../../globals.css'
 import React, { useState, useEffect } from 'react';
 import getAllHotelEvents from '../../../services/GET/getAllHotelEvents';
+import getEventByID from '../../../services/GET/getEventByID';
+import getHotelByID from '../../../services/GET/getHotelByID';
 import { BsArrowLeftShort, BsArrowRightShort, BsFilter } from 'react-icons/bs';
 
 export default function Hero(events: any) {
     const [currentEvent, setCurrentEvent] = useState(0);   
     const [allEvents, setAllEvents] = useState(true);
     const [hotelEvents, setHotelEvents] = useState([]); 
+    const [hotelEventsData, setHotelEventsData] = useState([]);
     const [width, setWidth] = useState(events.events.length * 100);
-    const [showFilter, setShowFilter] = useState(false);
+    const [filterWidth, setFilterWidth] = useState(50);
 
     const fetchHotelEvents = async () => {
-        const response = await getAllHotelEvents();
-        setHotelEvents(response);
+        const res = await getAllHotelEvents();
+        setHotelEvents(res);
     }
 
     if (hotelEvents && hotelEvents.length === 0) {
         fetchHotelEvents();
+    }
+
+    const fetchHotelEventData = async (hotelIDarg: number, eventIDarg: number) => {
+        const eventID = String(eventIDarg);
+        const hotelID = String(hotelIDarg);
+        const event = await getEventByID(eventID);
+        const hotel = await getHotelByID(hotelID);
+        return [event, hotel];
+    }
+
+    if (hotelEvents && hotelEventsData.length === 0) {
+        console.log('checking')
+        hotelEvents.map( async (hotelEvent: any) => {
+            console.log('started iteration');
+            const res = await fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
+            console.log('res: ', res);
+            setHotelEventsData(prevData => [...prevData, res]);
+            console.log('hotelEvent: ', hotelEventsData);
+        })
     }
 
     const left = () => {
@@ -42,15 +64,15 @@ export default function Hero(events: any) {
         setAllEvents(true);
         setWidth(events.events.length * 100);
         setCurrentEvent(0);
-    }
+    };
 
-    const showFilterDropDown = () => {
-        setShowFilter(true);
-    }
+    const expandFilterWidth = () => {
+        setFilterWidth(200);
+    };
 
-    const hideFilterDropDown = () => {
-        setShowFilter(false);
-    }
+    const shrinkFilterWidth = () => {
+        setFilterWidth(50);
+    };
 
     useEffect(() => {
         const container = document.getElementById('Hero');
@@ -97,14 +119,14 @@ export default function Hero(events: any) {
             <div id="HeroContainer">
                 <div id="FilterButtonContainer">
                     {allEvents ? (
-                        <div id="FilterButton" onClick={switchHotelEvents} onMouseOver={showFilterDropDown} onMouseLeave={hideFilterDropDown}>
+                        <div id="FilterButton" onClick={switchHotelEvents} onMouseOver={expandFilterWidth} onMouseLeave={shrinkFilterWidth}>
                             <BsFilter id='FilterIcon' />
-                            {showFilter ? <p id="FilterText">All Events</p> : null }
+                            {filterWidth === 50 ? null : <p id="FilterText">All Events</p> }
                         </div>
                     ) : (
-                        <div id="FilterButton" onClick={switchAllEvents} onMouseOver={showFilterDropDown} onMouseLeave={hideFilterDropDown}>
+                        <div id="FilterButton" onClick={switchAllEvents} onMouseOver={expandFilterWidth} onMouseLeave={shrinkFilterWidth}>
                             <BsFilter id='FilterIcon' />
-                            {showFilter ? <p id="FilterText">Hotel Events</p> : null }
+                            {filterWidth === 50 ? null : <p id="FilterText">Hotel Events</p> }
                         </div>
                         
                     )}
@@ -144,8 +166,8 @@ export default function Hero(events: any) {
                                     <div id="EventName">
                                         <p id="Name">{event.title}</p>
                                     </div>
-                                    <div id="EventAddress">
-                                        <p id="Address">{event.address}</p>
+                                    <div id="EventDescription">
+                                        <p id="Description">{event.description}</p>
                                     </div>
                                     <div id="EventLocation">
                                         <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
@@ -162,7 +184,7 @@ export default function Hero(events: any) {
         <style>
             {`
             
-                :root { --width: ${width}vw; }
+                :root { --width: ${width}vw; --filterWidth: ${filterWidth}px; }
 
                 #Hero {
                     display: flex;
@@ -185,17 +207,22 @@ export default function Hero(events: any) {
                     justify-content: center;
                     align-items: center;
                 }
+                @keyframes slideIn {
+                    0% { transform: translateX(100%); }
+                    100% { transform: translateX(0); }
+                }
                 #FilterButtonContainer {
                     display: flex;
                     position: fixed;
                     top: 9vh;
                     right: 0;
-                    width: 200px;
+                    width: var(--filterWidth);
                     height: 50px;
                     justify-content: center;
                     align-items: center;
                     background-color: white;
                     border-radius: 25px 0 0 25px;
+                    animation: slideIn 0.3s;
                 }
                 #FilterButton {
                     display: flex;
@@ -211,12 +238,10 @@ export default function Hero(events: any) {
                     font-family: InterBold;
                     cursor: pointer;
                 }
-                #FilterIcon { font-size: 40px; margin-right: 10px; }
-                @keyframes slideIn {
-                    0% { transform: translateX(100%); }
-                    100% { transform: translateX(0); }
+                #FilterIcon { 
+                    font-size: 40px; 
+                    margin-right: 10px; 
                 }
-                #FilterText { animation: slideIn 0.3s; }
                 #EventListContainer {
                     display: flex;
                     position: relative;
@@ -288,23 +313,14 @@ export default function Hero(events: any) {
                 #EventInfo::-webkit-scrollbar-thumb {
                     background: grey;                
                 }
-                #EventName {
-                    
-                }
                 #Name {
                     color: white;
                     font-size: 30px;
                     font-family: InterBold;
                 }
-                #EventAddress {
-
-                }
-                #Address {
+                #Description {
                     color: white;
                     font-size: 12px;
-                }
-                #EventLocation {
-                    
                 }
                 #LocationLink {
                     color: white;
