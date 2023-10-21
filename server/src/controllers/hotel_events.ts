@@ -48,7 +48,7 @@ export class HotelEventQueries {
 
   createHotelEvent(req: Request, res: Response, data: any) {
     const hotelEvent: HotelEvent = data;
-    db.none("INSERT INTO hotel_event (title, description, location, address, rating, price, img) VALUES ($1, $2, $3, $4, $5, $6, $7)", [hotelEvent.title, hotelEvent.location, hotelEvent.address, hotelEvent.img])
+    db.none("INSERT INTO hotel_event (location, description, hotel_id, event_id) VALUES ($1, $2, $3, $4)", [hotelEvent.description, hotelEvent.location, hotelEvent.hotel_id, hotelEvent.event_id])
     .then(() => {
       console.log("Hotel event added");
     })
@@ -59,7 +59,7 @@ export class HotelEventQueries {
 
   updateHotelEvent(req: Request, res: Response, data: any, id: string) {
     const hotelEvent: HotelEvent = data;
-    db.none("UPDATE hotel_event SET title = $1, description = $2, location = $3, address = $4, rating = $5, price = $6, img = $7 WHERE id = $8", [hotelEvent.title, hotelEvent.location, hotelEvent.address, hotelEvent.img, id])
+    db.none("UPDATE hotel_event SET location = $1, description = $2, hotel_id = $3, event_id = $4 WHERE id = $5", [hotelEvent.description, hotelEvent.location, hotelEvent.hotel_id, hotelEvent.event_id, id])
     .then(() => {
       console.log("Hotel event updated");
     })
