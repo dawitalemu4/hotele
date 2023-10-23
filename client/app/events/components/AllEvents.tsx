@@ -28,10 +28,10 @@ export default function Hero(events: any) {
         const hotelID = String(hotelIDarg);
         const event = await getEventByID(eventID);
         const hotel = await getHotelByID(hotelID);
-        return [event, hotel];
+        return [{event: event}, {hotel: hotel}];
     }
 
-    if (hotelEvents && hotelEventsData.length === 0) {
+    if (hotelEvents && hotelEventsData.length <= (width / 100)) {
         console.log('checking')
         hotelEvents.map( async (hotelEvent: any) => {
             console.log('started iteration');
@@ -157,22 +157,26 @@ export default function Hero(events: any) {
                     </div>
                 ) : ( 
                     <div id="EventListContainer">
-                        {hotelEvents.map((event: any) => (
-                            <div id='Event' key={event.id}>
-                                <div id="ImageContainer">
-                                    <img id='Image' src={event.img} />
-                                </div>
-                                <div id="EventInfo">
-                                    <div id="EventName">
-                                        <p id="Name">{event.title}</p>
+                        {hotelEvents.map((hotelEvent: any) => (
+                            <div id='HotelEvent' key={hotelEvent.id}> 
+                                {hotelEventsData.map((data: any) => (
+                                    <div id="Event" key={data.id}>
+                                        <div id="ImageContainer">
+                                            <img id='Image' src={hotelEvent.img} />
+                                        </div>
+                                        <div id="EventInfo">
+                                            <div id="EventName">
+                                                <p id="Name">{data[data.id].event.title}</p>
+                                            </div>
+                                            <div id="EventDescription">
+                                                <p id="Description">{hotelEvent.description}</p>
+                                            </div>
+                                            <div id="EventLocation">
+                                                <a id="LocationLink" href={`/events/${hotelEvent.location}`}>Location - {hotelEvent.location}</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div id="EventDescription">
-                                        <p id="Description">{event.description}</p>
-                                    </div>
-                                    <div id="EventLocation">
-                                        <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         ))}
                     </div>
@@ -273,6 +277,15 @@ export default function Hero(events: any) {
                     height: 100%;
                     width: 100%;
                     color: white;
+                }
+                #HotelEventListContainer {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    align-items: center;
                 }
                 #Event {
                     display: flex;
