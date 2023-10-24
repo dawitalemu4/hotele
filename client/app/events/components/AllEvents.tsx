@@ -23,23 +23,20 @@ export default function Hero(events: any) {
         fetchHotelEvents();
     }
 
-    const fetchHotelEventData = async (hotelIDarg: number, eventIDarg: number) => {
+    const fetchHotelEventData = async (hotelEventIDarg: number, hotelIDarg: number, eventIDarg: number) => {
         const eventID = String(eventIDarg);
         const hotelID = String(hotelIDarg);
         const event = await getEventByID(eventID);
         const hotel = await getHotelByID(hotelID);
-        return [event, hotel];
+        const hotelEventID = hotelEventIDarg;
+        return {[hotelEventID]: [{event: event}, {hotel: hotel}]};
     }
 
-    if (hotelEvents && hotelEventsData.length === 0) {
-        console.log('checking')
+    if (hotelEvents && hotelEventsData.length <= hotelEvents.length) {
         hotelEvents.map( async (hotelEvent: any) => {
-            console.log('started iteration');
-            const res = await fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
-            console.log('res: ', res);
+            const res = await fetchHotelEventData(hotelEvent.id, hotelEvent.hotel_id, hotelEvent.event_id);
             setHotelEventsData(prevData => [...prevData, res]);
-            console.log('hotelEvent: ', hotelEventsData);
-        })
+        });  
     }
 
     const left = () => {
@@ -112,6 +109,7 @@ export default function Hero(events: any) {
                 RightArrow.style.display = 'flex';
             }
         }
+
     }, [currentEvent]);
 
     return ( 
@@ -157,20 +155,20 @@ export default function Hero(events: any) {
                     </div>
                 ) : ( 
                     <div id="EventListContainer">
-                        {hotelEvents.map((event: any) => (
-                            <div id='Event' key={event.id}>
+                        {hotelEvents.map((hotelEvent: any) => (
+                            <div id='Event' key={hotelEvent.id}> 
                                 <div id="ImageContainer">
-                                    <img id='Image' src={event.img} />
+                                    <img id='Image' src={hotelEventsData[hotelEvent.id]} />
                                 </div>
                                 <div id="EventInfo">
                                     <div id="EventName">
-                                        <p id="Name">{event.title}</p>
+                                        <p id="Name">{hotelEventsData[hotelEvent.id]}</p>
                                     </div>
                                     <div id="EventDescription">
-                                        <p id="Description">{event.description}</p>
+                                        <p id="Description">{hotelEvent.description}</p>
                                     </div>
                                     <div id="EventLocation">
-                                        <a id="LocationLink" href={`/events/${event.location}`}>Location - {event.location}</a>
+                                        <a id="LocationLink" href={`/events/${hotelEvent.location}`}>Location - {hotelEvent.location}</a>
                                     </div>
                                 </div>
                             </div>

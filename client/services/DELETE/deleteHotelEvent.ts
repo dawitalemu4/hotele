@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function deleteHotelEvent(id: string) {
     try {
-        await axios.delete(`http://localhost:5432/hotelEvent/delete/${id}`)
+        await axios.delete(`https://hotel-template-backend.vercel.app/hotelEvent/delete/${id}`)
     }
     catch (error) {
         console.log(error);
