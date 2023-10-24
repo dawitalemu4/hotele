@@ -23,23 +23,20 @@ export default function Hero(events: any) {
         fetchHotelEvents();
     }
 
-    const fetchHotelEventData = async (hotelIDarg: number, eventIDarg: number) => {
+    const fetchHotelEventData = async (hotelEventIDarg: number, hotelIDarg: number, eventIDarg: number) => {
         const eventID = String(eventIDarg);
         const hotelID = String(hotelIDarg);
         const event = await getEventByID(eventID);
         const hotel = await getHotelByID(hotelID);
-        return [{event: event}, {hotel: hotel}];
+        const hotelEventID = hotelEventIDarg;
+        return {[hotelEventID]: [{event: event}, {hotel: hotel}]};
     }
 
-    if (hotelEvents && hotelEventsData.length <= (width / 100)) {
-        console.log('checking')
+    if (hotelEvents && hotelEventsData.length <= hotelEvents.length) {
         hotelEvents.map( async (hotelEvent: any) => {
-            console.log('started iteration');
-            const res = await fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
-            console.log('res: ', res);
+            const res = await fetchHotelEventData(hotelEvent.id, hotelEvent.hotel_id, hotelEvent.event_id);
             setHotelEventsData(prevData => [...prevData, res]);
-            console.log('hotelEvent: ', hotelEventsData);
-        })
+        });  
     }
 
     const left = () => {
@@ -112,6 +109,7 @@ export default function Hero(events: any) {
                 RightArrow.style.display = 'flex';
             }
         }
+
     }, [currentEvent]);
 
     return ( 
@@ -158,25 +156,21 @@ export default function Hero(events: any) {
                 ) : ( 
                     <div id="EventListContainer">
                         {hotelEvents.map((hotelEvent: any) => (
-                            <div id='HotelEvent' key={hotelEvent.id}> 
-                                {hotelEventsData.map((data: any) => (
-                                    <div id="Event" key={data.id}>
-                                        <div id="ImageContainer">
-                                            <img id='Image' src={hotelEvent.img} />
-                                        </div>
-                                        <div id="EventInfo">
-                                            <div id="EventName">
-                                                <p id="Name">{data[data.id].event.title}</p>
-                                            </div>
-                                            <div id="EventDescription">
-                                                <p id="Description">{hotelEvent.description}</p>
-                                            </div>
-                                            <div id="EventLocation">
-                                                <a id="LocationLink" href={`/events/${hotelEvent.location}`}>Location - {hotelEvent.location}</a>
-                                            </div>
-                                        </div>
+                            <div id='Event' key={hotelEvent.id}> 
+                                <div id="ImageContainer">
+                                    <img id='Image' src={hotelEventsData[hotelEvent.id]} />
+                                </div>
+                                <div id="EventInfo">
+                                    <div id="EventName">
+                                        <p id="Name">{hotelEventsData[hotelEvent.id]}</p>
                                     </div>
-                                ))}
+                                    <div id="EventDescription">
+                                        <p id="Description">{hotelEvent.description}</p>
+                                    </div>
+                                    <div id="EventLocation">
+                                        <a id="LocationLink" href={`/events/${hotelEvent.location}`}>Location - {hotelEvent.location}</a>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -277,15 +271,6 @@ export default function Hero(events: any) {
                     height: 100%;
                     width: 100%;
                     color: white;
-                }
-                #HotelEventListContainer {
-                    display: flex;
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    flex-wrap: wrap;
-                    justify-content: space-around;
-                    align-items: center;
                 }
                 #Event {
                     display: flex;
