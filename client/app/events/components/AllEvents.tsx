@@ -23,20 +23,22 @@ export default function Hero(events: any) {
         fetchHotelEvents();
     }
 
-    const fetchHotelEventData = async (hotelEventIDarg: number, hotelIDarg: number, eventIDarg: number) => {
+    const fetchHotelEventData = async (hotelIDarg: number, eventIDarg: number) => {
         const eventID = String(eventIDarg);
         const hotelID = String(hotelIDarg);
         const event = await getEventByID(eventID);
         const hotel = await getHotelByID(hotelID);
-        const hotelEventID = hotelEventIDarg;
-        return {[hotelEventID]: [{event: event}, {hotel: hotel}]};
+        return [{event: event}, {hotel: hotel}];
     }
 
-    if (hotelEvents && hotelEventsData.length <= hotelEvents.length) {
-        hotelEvents.map( async (hotelEvent: any) => {
-            const res = await fetchHotelEventData(hotelEvent.id, hotelEvent.hotel_id, hotelEvent.event_id);
-            setHotelEventsData(prevData => [...prevData, res]);
-        });  
+    if (hotelEvents && hotelEventsData.length < hotelEvents.length) {
+        const fetchData = async () => {
+            const data = await Promise.all(hotelEvents.map(hotelEvent => {
+                return fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
+            }));
+            setHotelEventsData(prevData => [...prevData, ...data]);
+        }
+        fetchData();
     }
 
     const left = () => {
@@ -119,12 +121,12 @@ export default function Hero(events: any) {
                     {allEvents ? (
                         <div id="FilterButton" onClick={switchHotelEvents} onMouseOver={expandFilterWidth} onMouseLeave={shrinkFilterWidth}>
                             <BsFilter id='FilterIcon' />
-                            {filterWidth === 50 ? null : <p id="FilterText">All Events</p> }
+                            {filterWidth === 50 ? null : <p id="FilterText">Hotel Events</p> }
                         </div>
                     ) : (
                         <div id="FilterButton" onClick={switchAllEvents} onMouseOver={expandFilterWidth} onMouseLeave={shrinkFilterWidth}>
                             <BsFilter id='FilterIcon' />
-                            {filterWidth === 50 ? null : <p id="FilterText">Hotel Events</p> }
+                            {filterWidth === 50 ? null : <p id="FilterText">All Events</p> }
                         </div>
                         
                     )}
@@ -158,11 +160,14 @@ export default function Hero(events: any) {
                         {hotelEvents.map((hotelEvent: any) => (
                             <div id='Event' key={hotelEvent.id}> 
                                 <div id="ImageContainer">
-                                    <img id='Image' src={hotelEventsData[hotelEvent.id]} />
+                                    <img id='Image' src={hotelEventsData[hotelEvent.id][0].event.img} />
                                 </div>
                                 <div id="EventInfo">
                                     <div id="EventName">
-                                        <p id="Name">{hotelEventsData[hotelEvent.id]}</p>
+                                        <p id="Name">{hotelEventsData[hotelEvent.id][0].event.title}</p>
+                                    </div>
+                                    <div id="HotelName">
+                                        <a id="HotelLink" href={hotelEventsData[hotelEvent.id][1].hotel.id}>@ {hotelEventsData[hotelEvent.id][1].hotel.title}</a>
                                     </div>
                                     <div id="EventDescription">
                                         <p id="Description">{hotelEvent.description}</p>
@@ -189,7 +194,7 @@ export default function Hero(events: any) {
                     position: relative;
                     width: var(--width);
                     height: 80vh;
-                    margin-top: 15vh;
+                    margin-top: 20vh;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
@@ -212,7 +217,7 @@ export default function Hero(events: any) {
                 #FilterButtonContainer {
                     display: flex;
                     position: fixed;
-                    top: 9vh;
+                    top: 11vh;
                     right: 0;
                     width: var(--filterWidth);
                     height: 50px;
@@ -315,6 +320,15 @@ export default function Hero(events: any) {
                     color: white;
                     font-size: 30px;
                     font-family: InterBold;
+                }
+                #HotelName {
+                    margin-top: -10px;
+                    margin-bottom: 15px;
+                }
+                #HotelLink {
+                    color: white;
+                    font-size: 20px;
+                    font-family: InterSemi;
                 }
                 #Description {
                     color: white;
