@@ -17,11 +17,11 @@ export default function Hero(events: any) {
     const fetchHotelEvents = async () => {
         const res = await getAllHotelEvents();
         setHotelEvents(res);
-    }
+    };
 
     if (hotelEvents && hotelEvents.length === 0) {
         fetchHotelEvents();
-    }
+    };
 
     const fetchHotelEventData = async (hotelIDarg: number, eventIDarg: number) => {
         const eventID = String(eventIDarg);
@@ -29,17 +29,20 @@ export default function Hero(events: any) {
         const event = await getEventByID(eventID);
         const hotel = await getHotelByID(hotelID);
         return [{event: event}, {hotel: hotel}];
-    }
+    };
+    
+    const assignHotelEventDataToID = async () => {
+        const dataPromises = hotelEvents.map(async (hotelEvent) => {
+            const eventData = await fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
+            return eventData;
+        });
+        const eventDataArray = await Promise.all(dataPromises);
+        setHotelEventsData((prevData) => [...prevData, ...eventDataArray]);
+    };
 
     if (hotelEvents && hotelEventsData.length < hotelEvents.length) {
-        const fetchData = async () => {
-            const data = await Promise.all(hotelEvents.map(hotelEvent => {
-                return fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
-            }));
-            setHotelEventsData(prevData => [...prevData, ...data]);
-        }
-        fetchData();
-    }
+        assignHotelEventDataToID();
+    };
 
     const left = () => {
         if (currentEvent > 0) {
