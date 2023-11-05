@@ -31,13 +31,12 @@ export default function Hero(events: any) {
         return [{event: event}, {hotel: hotel}];
     };
     
-    const assignHotelEventDataToID = async () => {
-        const dataPromises = hotelEvents.map(async (hotelEvent) => {
+    const assignHotelEventDataToID = () => {
+        const mapHotelEvents = hotelEvents.map(async (hotelEvent) => {
             const eventData = await fetchHotelEventData(hotelEvent.hotel_id, hotelEvent.event_id);
-            return eventData;
+            setHotelEventsData((prevData) => [...prevData, eventData]);
         });
-        const eventDataArray = await Promise.all(dataPromises);
-        setHotelEventsData((prevData) => [...prevData, ...eventDataArray]);
+        mapHotelEvents;
     };
 
     if (hotelEvents && hotelEventsData.length < hotelEvents.length) {
